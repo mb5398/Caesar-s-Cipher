@@ -2,19 +2,16 @@ alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n'
 
 def caesar(start_text, shift_amount, cipher_direction):
   end_text = ""
-  if shift_amount > 25:
-    shift_amount %= 26
   if cipher_direction == "decode":
     shift_amount *= -1
   for char in start_text:
-    if char not in alphabet:
-      end_text += char
-    else:
+    if char in alphabet:
       position = alphabet.index(char)
       new_position = position + shift_amount
       end_text += alphabet[new_position]
+    else:
+      end_text += char
   print(f"Here's the {cipher_direction}d result: {end_text}")
-
 
 from art import logo
 from replit import clear
@@ -24,7 +21,7 @@ while restart == "yes":
   print(logo)
   direction = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n")
   text = input("Type your message:\n").lower()
-  shift = int(input("Type the shift number:\n"))
+  shift = int(input("Type the shift number:\n")) % 26
   caesar(start_text=text, shift_amount=shift, cipher_direction=direction)
   restart = input("\nWould you like to restart the program, 'yes' or 'no'?:\n").lower()
   if restart == 'yes':
